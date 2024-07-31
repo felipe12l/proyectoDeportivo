@@ -1,0 +1,37 @@
+body {
+    padding-top: 50px;
+    width: 95%;
+    padding-left: 50px;
+    display: block;
+
+}
+
+#add-competition{
+    width: 100%;
+    padding: 20px;
+    background-color: #eeefef;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.13);
+    height: 100%;
+}
+
+#add-container{
+    width: 100%;
+    display: table;
+    gap: 50px;
+}
+
+#add-btns{
+    padding-left: 82%;
+    display: inline;
+    width: 500px;
+    gap: 20px   ;
+}
+#add-btns .btn, #add-btns .btn- primary{
+    width: 100px;
+}
+
+#fields .col input, #fields .col select{
+    margin-bottom: 30px;
+    width: 400px;
+}
