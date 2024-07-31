@@ -11,12 +11,6 @@ public class HandlingUsers {
         users = new ArrayList<User>();
     }
 
-    List<User> users;
-
-    public HandlingUser() {
-        users = new ArrayList<>();
-    }
-
     public List<User> getUsers() {
         return users;
     }
