@@ -1,10 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
 </head>
 <body>
+    <div class="snippet-container" id="general">
+        <h2>Ku Klux Klan Deportive Club</h2>
 
+        <div class="content-wrapper" id="menu">
+            <div>
+                <button type="button" class="btn btn-primary" onclick="showAdd()" style="border-radius: 10px">Add Competition</button>
+
+                <div style="width: 190px;height: 35px;display:
+                            flex;border: 1px solid #dee2e6;
+                            margin-left: 10px;align-content: center;
+                            background-color: #dee2e6;border-radius: 10px">
+                    <label style="padding: 5px">Filter:</label>
+                    <select id="filterSelect" name="Filter" style="margin: 5px; height: 25px">
+                        <option value="c">Competitions</option>
+                        <option value="u">Users</option>
+                    </select>
+                </div>
+
+
+                <input type="search" class="form-control" id="search-input" placeholder="Search:">
+            </div>
+        </div>
+
+        <div id="filters">
+            <div class="table-header" id="info-c">
+                <div class="row mb-3" id="head-c">
+                    <div class="col">
+                        <label>Name</label>
+                    </div>
+                    <div class="col">
+                        <label>Date</label>
+                    </div>
+                    <div class="col">
+                        <label>Participants Count</label>
+                    </div>
+                    <div class="col">
+                        <label>Award</label>
+                    </div>
+                    <div class="col">
+                        <label>OPTIONS</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-header" id="info-u" style="display: none">
+                <div class="row mb-3" id="head-u">
+                    <div class="col">
+                        <label>ID</label>
+                    </div>
+                    <div class="col">
+                        <label>Name</label>
+                    </div>
+                    <div class="col">
+                        <label>Last Name</label>
+                    </div>
+                    <div class="col">
+                        <label>Competitions Count</label>
+                    </div>
+                    <div class="col">
+                        <label>OPTIONS</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content-wrapper" id="add-tournament-form" style="display: none">
+        <h2>Add Competition to Ku Klux Klan Deportive Club</h2>
+        <br><br>
+        <div id="add-container">
+            <div class="row mb-3" style="gap: 10px">
+                <div class="col">
+                    <h3>Competition Info</h3>
+                    <input type="text" class="form-control" id="reg_name" placeholder="Name:">
+
+                    <input type="date" class="form-control" id="reg_dateS" placeholder="Date Start:">
+
+                    <input type="date" class="form-control" id="reg_dateE" placeholder="Date End:">
+
+                </div>
+                <div class="col" id="noGroup">
+                    <h3>Participants</h3>
+                    <select id="userSelect" name="users" style="height: 35px;width: 200px" title="All Users">
+                        <option value="" disabled selected>NIGGAS</option>
+                    </select>
+                    <i class="fas fa-plus" title="Add"></i>
+                    <i class="fas fa-trash-alt" title="Delete"></i>
+                </div>
+                <div class="col" id="inGroup" style="display: none">
+                    <h3>Groups</h3>
+                    <button type="button" class="btn btn-secundary" onclick="newGroup()">Add Group</button>
+                </div>
+
+            </div>
+            <div class="row mb-3" id="add-btns">
+                <button class="btn btn-primary" onclick="addTournament()">Add</button>
+                <button type="button" class="btn btn-outline-primary" onclick="back()">BACK</button>
+            </div>
+
+        </div>
+    </div>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
