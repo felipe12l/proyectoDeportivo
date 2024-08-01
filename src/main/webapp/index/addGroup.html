@@ -26,18 +26,17 @@
                     <label style="font-size: 14px">Required text field</label>
                     <label style="color: red">*</label>
                     <input type="text" class="form-control" id="reg_place" placeholder="Place:">
-                    <label style="font-size: 14px">Required text field</label>
-                    <label style="color: red">*</label>
                     <select id="disciplineSelect" name="discipline" style="height: 35px;width: 100%" title="All Disciplines">
-                        <option value="Tennis">Tennis</option>
-                        <option value="Football">TEJO</option>
-                        <option value="BasketBall">Athleticism</option>
+                        <option value="Football">Football</option>
+                        <option value="Basketball">Basketball</option>
+
                     </select>
                 </div>
+
                 <!--GROUPS-->
                 <div class="col">
                     <h3>Groups</h3>
-                    <br>
+                    <br><br><br>
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table table-bordered" id="tableToAdd">
                             <thead>
@@ -53,7 +52,7 @@
                 </div>
                 <div class="col">
                     <h3>LeaderBoard</h3>
-                    <br>
+                    <br><br><br>
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table table-bordered" id="leaderBoard">
                             <thead>
@@ -73,6 +72,30 @@
             <div class="row mb-3" id="add-btns">
                 <button class="btn btn-success" onclick="addCompetition()">Add</button>
                 <button type="button" class="btn btn-outline-danger" onclick="back()">BACK</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="participantsModal" tabindex="-1" aria-labelledby="participantsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="participantsModalLabel">Participants</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody id="participantsModalBody"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

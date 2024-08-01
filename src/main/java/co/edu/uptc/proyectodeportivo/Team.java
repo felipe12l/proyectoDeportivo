@@ -1,23 +1,16 @@
 package co.edu.uptc.proyectodeportivo;
 
-public class User {
+import java.util.List;
 
-    private int id;
+public class Team {
     private String name;
+    private List<User> participants;
     private String discipline;
 
-    public User(int id, String name, String discipline) {
-        this.id = id;
+    public Team(String name, List<User> participants,String discipline) {
         this.name = name;
+        this.participants = participants;
         this.discipline = discipline;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -26,6 +19,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
     }
 
     public String getDiscipline() {

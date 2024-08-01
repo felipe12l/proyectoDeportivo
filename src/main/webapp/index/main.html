@@ -18,8 +18,8 @@
                             margin-left: 50px;align-content: center;
                             background-color: white;border-radius: 10px">
                     <label style="padding: 5px">Filter:</label>
-                    <select id="filterSelect" name="Filter" style="margin-left: 20px;height: 33px;width: 330px;background-color: white;
-                                                               border-radius: 10px;border-color:#dee2e6;border-top-left-radius: 0;border-bottom-left-radius: 0;">
+                    <select  id="filterInfo" style="margin-left: 20px;height: 33px;width: 330px;background-color: white;
+                                                               border-color:#dee2e6;border-radius: 0 10px 10px 0;">
                         <option value="c">Competitions</option>
                         <option value="u">Users</option>
                     </select>
@@ -29,41 +29,33 @@
         </div>
 
         <div id="filters">
-            <div class="table-header" id="info-c">
-                <div class="row mb-3" id="head-c">
-                    <div class="col">
-                        <label>Name</label>
-                    </div>
-                    <div class="col">
-                        <label>Date</label>
-                    </div>
-                    <div class="col">
-                        <label>Discipline</label>
-                    </div>
-                    <div class="col">
-                        <label>OPTIONS</label>
-                    </div>
-                </div>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered" id="info-c">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Discipline</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
 
-            <div class="table-header" id="info-u" style="display: none">
-                <div class="row mb-3" id="head-u">
-                    <div class="col">
-                        <label>ID</label>
-                    </div>
-                    <div class="col">
-                        <label>Name</label>
-                    </div>
-                    <div class="col">
-                        <label>Last Name</label>
-                    </div>
-                    <div class="col">
-                        <label>Competitions Count</label>
-                    </div>
-                    <div class="col">
-                        <label>OPTIONS</label>
-                    </div>
-                </div>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered" id="info-u" style="display: none">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Competitions Count</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -96,6 +88,6 @@
     </div>
 
     <script src="../scripts/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
