@@ -1,5 +1,4 @@
 const general = document.getElementById("general")
-const addC = document.getElementById("add-competition")
 const filterSelect = document.getElementById("filterSelect");
 const userSelect = document.getElementById("userSelect");
 
@@ -30,13 +29,9 @@ function handleCompetitionType() {
 
 function showAdd(){
     const name = document.getElementById("reg_name")
-    addC.style.display = "block"
     general.style.display = "none"
 }
-function showSee(){
 
-}
 function back(){
-    addC.style.display = "none"
     general.style.display = "block"
 }

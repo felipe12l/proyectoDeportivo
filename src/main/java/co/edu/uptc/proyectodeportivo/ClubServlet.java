@@ -24,12 +24,12 @@ public class ClubServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         Gson gson = new Gson();
-
-        response.setContentType("application/html");
-        try(PrintWriter out = response.getWriter()){
-            out.println(gson.toJson( handlingUser.getUsers() ));
+        response.setContentType("application/json");
+        try (PrintWriter out = response.getWriter()) {
+            String jsonResponse = gson.toJson(handlingUser.getUsers());
+            System.out.println("JSON Response: " + jsonResponse);  // Imprimir respuesta en consola
+            out.println(jsonResponse);
         }
     }
 
