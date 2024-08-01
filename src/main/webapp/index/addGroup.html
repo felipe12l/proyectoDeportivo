@@ -14,12 +14,12 @@
         <div id="add-container">
             <div class="row mb-3" style="gap: 10px" id="fields">
 
-                <div class="col">
+                <div class="col" style="max-width: 200px ">
                     <h3>Competition Info</h3>
                     <br>
                     <label style="font-size: 14px">Required text field</label>
                     <label style="color: red">*</label>
-                    <input type="text" class="form-control" id="reg_name" placeholder="Name:">
+                    <input type="text" class="form-control" id="reg_name" placeholder="Name:"   >
                     <label style="font-size: 14px">Required text field</label>
                     <label style="color: red">*</label>
                     <input type="date" class="form-control" id="reg_dateS" placeholder="Date:">
@@ -38,21 +38,36 @@
                 <div class="col">
                     <h3>Groups</h3>
                     <br>
-                    <button class="btn btn-primary" style="margin-top: 25px;margin-bottom: 25px" onclick="openAddGroupModal()">Add Group</button>
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table table-bordered" id="tableToAdd">
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th style="width: 160px">Participants</th>
-                                <th style="width: 120px">Action</th>
+                                <th style="width: 50px">Participants</th>
+                                <th style="width: 50px">Action</th>
                             </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
                     </div>
                 </div>
-
+                <div class="col">
+                    <h3>LeaderBoard</h3>
+                    <br>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table class="table table-bordered" id="leaderBoard">
+                            <thead>
+                            <tr>
+                                <th style="width: 50px">Position</th>
+                                <th>Name</th>
+                                <th style="width: 50px">Participants</th>
+                                <th style="width: 50px">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
 
             </div>
             <div class="row mb-3" id="add-btns">
@@ -62,113 +77,7 @@
         </div>
     </div>
 
-    <!-- Add Group Modal -->
-    <div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addGroupModalLabel">Add Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="groupName" class="form-label">Group Name</label>
-                        <input type="text" class="form-control" id="groupName" placeholder="Enter group name">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Available Participants</h3>
-                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                <table class="table table-bordered" id="availableParticipantsTable">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th style="width: 50px">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <h3>Selected Participants</h3>
-                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                <table class="table table-bordered" id="selectedParticipantsTable">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th style="width: 50px">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="addGroup()">Add Group</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Edit Group Modal -->
-    <div class="modal fade" id="editGroupModal" tabindex="-1" aria-labelledby="editGroupModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editGroupModalLabel">Edit Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editGroupName" class="form-label">Group Name</label>
-                        <input type="text" class="form-control" id="editGroupName" placeholder="Enter group name">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Available Participants</h3>
-                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                <table class="table table-bordered" id="editAvailableParticipantsTable">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th style="width: 50px">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <h3>Selected Participants</h3>
-                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                <table class="table table-bordered" id="editSelectedParticipantsTable">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th style="width: 50px">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveGroupEdit()">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <div class="notification" id="notification"></div>
