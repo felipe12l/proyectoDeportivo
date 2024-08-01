@@ -20,6 +20,22 @@ public class ClubServlet extends HttpServlet {
         handlingUser.addUser(3, "C");
         handlingUser.addUser(4, "D");
         handlingUser.addUser(5, "E");
+        handlingUser.addUser(6, "F");
+        handlingUser.addUser(7, "G");
+        handlingUser.addUser(8, "H");
+        handlingUser.addUser(9, "I");
+        handlingUser.addUser(10, "J");
+        handlingUser.addUser(11, "K");
+        handlingUser.addUser(12, "L");
+        handlingUser.addUser(13, "M");
+        handlingUser.addUser(14, "N");
+        handlingUser.addUser(15, "O");
+        handlingUser.addUser(16, "P");
+        handlingUser.addUser(17, "Q");
+        handlingUser.addUser(18, "R");
+        handlingUser.addUser(19, "S");
+        handlingUser.addUser(20, "T");
+        handlingUser.addUser(21, "U");
 
     }
 
