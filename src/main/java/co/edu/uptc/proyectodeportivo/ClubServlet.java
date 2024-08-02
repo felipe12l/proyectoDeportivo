@@ -1,12 +1,15 @@
 package co.edu.uptc.proyectodeportivo;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import co.edu.uptc.proyectodeportivo.logic.*;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -71,14 +74,14 @@ public class ClubServlet extends HttpServlet {
         handlingUser.addTeam("Basketball1", basket1, basketball);
         handlingUser.addTeam("Basketball2", basket2,basketball);
 
-        handlingUser.addIndividualCompetition("Tennis 1", "20/12/2021", tennis, handlingUser.getUsers().stream().limit(4).collect(Collectors.toList()));
-        handlingUser.addIndividualCompetition("F1 1", "20/12/2021", f1, handlingUser.getUsers().stream().skip(14).limit(7).collect(Collectors.toList()));
+        handlingUser.addIndividualCompetition("Tennis 1", "2021-05-01", tennis, handlingUser.getUsers().stream().limit(4).collect(Collectors.toList()));
+        handlingUser.addIndividualCompetition("F1 1", "2021-05-01", f1, handlingUser.getUsers().stream().skip(14).limit(7).collect(Collectors.toList()));
 
 
-        handlingUser.addGroupalCompetition("Football 1", "20/12/2021", football, List.of(handlingUser.findTeam("Football1"),
+        handlingUser.addGroupalCompetition("Football 1", "2021-05-01", football, List.of(handlingUser.findTeam("Football1"),
                                                                                           handlingUser.findTeam("Football2")));
 
-        handlingUser.addGroupalCompetition("Basketball 1", "20/12/2021", basketball, List.of(handlingUser.findTeam("Basketball1"),
+        handlingUser.addGroupalCompetition("Basketball 1", "2021-05-01", basketball, List.of(handlingUser.findTeam("Basketball1"),
                 handlingUser.findTeam("Basketball2")));
 
 
@@ -136,5 +139,49 @@ public class ClubServlet extends HttpServlet {
 
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Gson gson = new Gson();
+
+        String param = request.getParameter("param");
+
+        if("1".equals(param)){
+            String name = request.getParameter("name");
+            String date = request.getParameter("date");
+            String discipline = request.getParameter("discipline");
+            String leaderboardJson = request.getParameter("leaderboard");
+
+            Type leaderboardType = new TypeToken<List<User>>(){}.getType();
+            List<User> leaderboard = gson.fromJson(leaderboardJson, leaderboardType);
+
+
+            handlingUser.addIndividualCompetition(name, date, new Discipline(discipline, false), leaderboard);
+
+            try (PrintWriter out = response.getWriter()) {
+                out.println(gson.toJson("Competition added successfully"));
+            }
+        }else if("2".equals(param)){
+
+
+            String name = request.getParameter("name");
+            String date = request.getParameter("date");
+            String discipline = request.getParameter("discipline");
+            String leaderboardJson = request.getParameter("leaderboard");
+
+            Type leaderboardType = new TypeToken<List<Team>>(){}.getType();
+            List<Team> leaderboard = gson.fromJson(leaderboardJson, leaderboardType);
+
+
+            handlingUser.addGroupalCompetition(name, date, new Discipline(discipline, true), leaderboard);
+
+            try (PrintWriter out = response.getWriter()) {
+                out.println(gson.toJson("Competition added successfully"));
+            }
+        }
+
+
+    }
+
 
 }

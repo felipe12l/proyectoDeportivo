@@ -1,5 +1,6 @@
 const general = document.getElementById("general")
 const userSelect = document.getElementById("userSelect");
+const searchInput = document.getElementById('search-input');
 const infoC = document.getElementById("info-c");
 const infoU = document.getElementById("info-u");
 
@@ -11,7 +12,25 @@ let allCompetitions = []
 const filterInfo = document.getElementById("filterInfo");
 filterInfo.value = 'c'
 
+
+document.getElementById('search-input').addEventListener('input', function() {
+    if (filterInfo.value === 'c') {
+        showInfoCompetition();
+    } else if (filterInfo.value === 'u') {
+        showInfoUsers();
+    }
+});
+
 filterChanged()
+
+searchInput.addEventListener('input', function() {
+    if (filterInfo.value === 'c') {
+        showInfoCompetition();
+    } else if (filterInfo.value === 'u') {
+        showInfoUsers();
+    }
+});
+
 
 function filterChanged() {
     const tableContainer = document.getElementById('tableContainer');
@@ -106,23 +125,35 @@ function getCommpetitions() {
 
 
 function showInfoCompetition() {
+
     const tbody = document.getElementById('info-c').querySelector('tbody');
     tbody.innerHTML = '';
+    const searchQuery = document.getElementById('search-input').value.toLowerCase();
+    let filteredCompetitions = allCompetitions;
+    if(searchInput.value){
+        filteredCompetitions = allCompetitions.filter(cmp =>
+            cmp.name.toLowerCase().includes(searchQuery) ||
+            cmp.date.toLowerCase().includes(searchQuery) ||
+            cmp.discipline.name.toLowerCase().includes(searchQuery)
+        );
+    }
 
-    allCompetitions.forEach(cmp => {
+    filteredCompetitions.forEach(cmp => {
         const row = document.createElement('tr');
 
         row.innerHTML = `
-            <td>${cmp.name}</td>
-            <td>${cmp.date}</td>
-            <td>${cmp.discipline.name}</td>
-            <td>
-                <i class="fas fa-eye" title="See" onclick="viewLeaderboard('${cmp.name}')"></i>
-            </td>
-        `;
+        <td>${cmp.name}</td>
+        <td>${cmp.date}</td>
+        <td>${cmp.discipline.name}</td>
+        <td>
+            <i class="fas fa-eye" title="See" onclick="viewLeaderboard('${cmp.name}')"></i>
+        </td>
+    `;
 
         tbody.appendChild(row);
     });
+
+
 }
 
 
@@ -141,8 +172,8 @@ function viewLeaderboard(name) {
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Puesto</th>
-                        <th>Nombre</th>
+                        <th>Position</th>
+                        <th>Information</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -229,8 +260,19 @@ function getUsers() {
 function showInfoUsers() {
     const tbody = document.getElementById('info-u').querySelector('tbody');
     tbody.innerHTML = '';
+    const searchQuery = document.getElementById('search-input').value.toLowerCase();
 
-    allUsers.forEach(user => {
+    let filteredUsers = allUsers;
+    if(searchInput.value){
+        filteredUsers = allUsers.filter(user =>
+            user.name.toLowerCase().includes(searchQuery) ||
+            user.lastName.toLowerCase().includes(searchQuery) ||
+            user.discipline.name.toLowerCase().includes(searchQuery)
+        );
+    }
+
+
+    filteredUsers.forEach(user => {
         const row = document.createElement('tr');
 
         row.innerHTML = `

@@ -18,7 +18,22 @@ document.addEventListener('DOMContentLoaded', function () {
         resetLeaderboard()
     });
     getParticipants(disciplineSelect.value)
+
+    // Inicializar Sortable en el leaderboard
+    new Sortable(document.getElementById('leaderboard-body'), {
+        animation: 150,
+        onEnd: function (/**Event*/evt) {
+            reorderLeaderboard(evt.oldIndex, evt.newIndex)
+        }
+    });
 });
+
+function reorderLeaderboard(oldIndex, newIndex) {
+    const movedItem = leaderboard.splice(oldIndex, 1)[0]
+    leaderboard.splice(newIndex, 0, movedItem)
+    showLeaderboard()
+}
+
 
 function showParticipantsToAdd(users) {
     const table = document.getElementById('tableToAdd').querySelector('tbody')
@@ -61,9 +76,7 @@ function removeParticipant(index) {
     showNotification('Participant removed successfully!', 'success')
 }
 
-function addCompetition() {
-    alert('Competition added!')
-}
+
 
 function back() {
     window.location.href = "main.html"
@@ -114,3 +127,46 @@ function showNotification(message, type) {
         notification.style.display = 'none'
     }, 3000)
 }
+
+function addCompetition() {
+
+    const name = document.getElementById('reg_name').value;
+    const date = document.getElementById('reg_date').value;
+
+    if (!name || !date) {
+        showNotification('All fields are required!', 'error');
+        return;
+    }
+
+    if (leaderboard.length === 0) {
+        showNotification('Leaderboard must have at least one participant!', 'error');
+        return;
+    }
+
+    doPost()
+    showNotification('Competition added successfully!', 'success');
+
+}
+
+function doPost(){
+    const params = new URLSearchParams({ param: 1})
+    const name = document.getElementById('reg_name').value;
+    const date = document.getElementById('reg_date').value;
+    const place = document.getElementById('reg_place').value;
+    const disciplineSelect = document.getElementById('disciplineSelect').value;
+    const leaderboardJSON = JSON.stringify(leaderboard);
+
+    const xhr = new XMLHttpRequest()
+    xhr.open("POST", `/proyectoDeportivo_war_exploded/club-servlet?${params.toString()}`, true)
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4 && xhr.status === 200){
+            back()
+        }
+    }
+
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    const data = `name=${encodeURIComponent(name)}&date=${encodeURIComponent(date)}&place=${encodeURIComponent(place)}&discipline=${encodeURIComponent(disciplineSelect)}&leaderboard=${encodeURIComponent(leaderboardJSON)}`;
+    console.log(data)
+    xhr.send(data)
+}
+
