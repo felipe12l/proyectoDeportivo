@@ -1,13 +1,13 @@
-package co.edu.uptc.proyectodeportivo;
+package co.edu.uptc.proyectodeportivo.logic;
 
 import java.util.List;
 
 public class Team {
     private String name;
     private List<User> participants;
-    private String discipline;
+    private Discipline discipline;
 
-    public Team(String name, List<User> participants,String discipline) {
+    public Team(String name, List<User> participants,Discipline discipline) {
         this.name = name;
         this.participants = participants;
         this.discipline = discipline;
@@ -29,11 +29,11 @@ public class Team {
         this.participants = participants;
     }
 
-    public String getDiscipline() {
+    public Discipline getDiscipline() {
         return discipline;
     }
 
-    public void setDiscipline(String discipline) {
+    public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
 }

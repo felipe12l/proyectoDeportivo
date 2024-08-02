@@ -74,9 +74,7 @@ function addGroup(groupName) {
 
         showGroups()
         showLeaderboard()
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addGroupModal'))
-        modal.hide()
+        showNotification('Team added successfully!', 'success')
     } else {
         showNotification('Group name is required', 'error')
     }
@@ -139,12 +137,12 @@ function showParticipantsModal(groupName) {
 
 
 function removeGroup(groupName) {
-    leaderboard = leaderboard.filter(group => group.name !== groupName)
-    availableGroups.push({ name: groupName, participants: [] })
-    showGroups()
-    showLeaderboard()
+    leaderboard = leaderboard.filter(group => group.name !== groupName);
+    availableGroups.push({ name: groupName, participants: [] });
+    showGroups();
+    showLeaderboard();
+    showNotification('Team removed successfully!', 'success');
 }
-
 function resetLeaderboard(){
     leaderboard = []
     const leaderboardT = document.getElementById("leaderboard").querySelector('tbody')
@@ -158,11 +156,13 @@ function back() {
 
 
 function showNotification(message, type) {
-    const notification = document.getElementById('notification')
-    notification.innerText = message
-    notification.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545'
-    notification.style.display = 'block'
+    const notification = document.getElementById('notification');
+    notification.innerText = message;
+    notification.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545';
+    notification.style.display = 'block';
+
     setTimeout(() => {
-        notification.style.display = 'none'
-    }, 3000)
+        notification.style.display = 'none';
+    }, 3000);
 }
+

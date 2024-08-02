@@ -3,7 +3,6 @@ body {
     width: 95%;
     padding-left: 50px;
     display: block;
-
 }
 
 .snippet-container{
@@ -81,6 +80,20 @@ i:hover {
     width: 100%;
     max-height: 500px;
     display: flex;
+}
 
-
+/*SUCCESS or ERROR NOTIFICATION*/
+.notification {
+    width: 300px;
+    height: 70px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+    text-align: center;
 }

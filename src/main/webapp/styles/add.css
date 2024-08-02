@@ -80,7 +80,7 @@ i:hover {
 
 /*SUCCESS or ERROR NOTIFICATION*/
 .notification {
-    width: 270px;
+    width: 300px;
     height: 70px;
     position: fixed;
     bottom: 20px;

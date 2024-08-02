@@ -6,104 +6,97 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
 </head>
 <body>
-    <h2>Add Competition to Ku Klux Klan Deportive Club</h2>
-    <br><br>
-    <!--ADD GROUP-->
-    <div class="content-wrapper" id="add-competition">
-
-        <div id="add-container">
-            <div class="row mb-3" style="gap: 10px" id="fields">
-
-                <div class="col" style="max-width: 200px ">
-                    <h3>Competition Info</h3>
-                    <br>
-                    <label style="font-size: 14px">Required text field</label>
-                    <label style="color: red">*</label>
-                    <input type="text" class="form-control" id="reg_name" placeholder="Name:"   >
-                    <label style="font-size: 14px">Required text field</label>
-                    <label style="color: red">*</label>
-                    <input type="date" class="form-control" id="reg_dateS" placeholder="Date:">
-                    <label style="font-size: 14px">Required text field</label>
-                    <label style="color: red">*</label>
-                    <input type="text" class="form-control" id="reg_place" placeholder="Place:">
-                    <select id="disciplineSelect" name="discipline" style="height: 35px;width: 100%" title="All Disciplines">
-                        <option value="Football">Football</option>
-                        <option value="Basketball">Basketball</option>
-
-                    </select>
-                </div>
-
-                <!--GROUPS-->
-                <div class="col">
-                    <h3>Groups</h3>
-                    <br><br><br>
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                        <table class="table table-bordered" id="tableToAdd">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th style="width: 50px">Participants</th>
-                                <th style="width: 50px">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col">
-                    <h3>LeaderBoard</h3>
-                    <br><br><br>
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                        <table class="table table-bordered" id="leaderBoard">
-                            <thead>
-                            <tr>
-                                <th style="width: 50px">Position</th>
-                                <th>Name</th>
-                                <th style="width: 50px">Participants</th>
-                                <th style="width: 50px">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
+<h2>Add Competition to Ku Klux Klan Deportive Club</h2>
+<br><br>
+<!--ADD GROUP-->
+<div class="content-wrapper" id="add-competition">
+    <div id="add-container">
+        <div class="row mb-3" style="gap: 10px" id="fields">
+            <div class="col" style="max-width: 200px">
+                <h3>Competition Info</h3>
+                <br>
+                <label style="font-size: 14px">Required text field</label>
+                <label style="color: red">*</label>
+                <input type="text" class="form-control" id="reg_name" placeholder="Name:">
+                <label style="font-size: 14px">Required text field</label>
+                <label style="color: red">*</label>
+                <input type="date" class="form-control" id="reg_dateS" placeholder="Date:">
+                <label style="font-size: 14px">Required text field</label>
+                <label style="color: red">*</label>
+                <input type="text" class="form-control" id="reg_place" placeholder="Place:">
+                <select id="disciplineSelect" name="discipline" style="height: 35px; width: 100%" title="All Disciplines">
+                    <option value="Football">Football</option>
+                    <option value="Basketball">Basketball</option>
+                </select>
             </div>
-            <div class="row mb-3" id="add-btns">
-                <button class="btn btn-success" onclick="addCompetition()">Add</button>
-                <button type="button" class="btn btn-outline-danger" onclick="back()">BACK</button>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="participantsModal" tabindex="-1" aria-labelledby="participantsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="participantsModalLabel">Participants</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered">
+            <!--GROUPS-->
+            <div class="col">
+                <h3>Groups</h3>
+                <br><br><br>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-bordered" id="tableToAdd">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
+                            <th style="width: 50px">Participants</th>
+                            <th style="width: 50px">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="participantsModalBody"></tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div class="col">
+                <h3>LeaderBoard</h3>
+                <br><br><br>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-bordered" id="leaderBoard">
+                        <thead>
+                        <tr>
+                            <th style="width: 50px">Position</th>
+                            <th>Name</th>
+                            <th style="width: 50px">Participants</th>
+                            <th style="width: 50px">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3" id="add-btns">
+            <button class="btn btn-success" onclick="addCompetition()">Add</button>
+            <button type="button" class="btn btn-outline-danger" onclick="back()">BACK</button>
+        </div>
+
+        <div class="modal fade" id="participantsModal" tabindex="-1" aria-labelledby="participantsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="participantsModalLabel">Participants</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+                            </thead>
+                            <tbody id="participantsModalBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
     <div class="notification" id="notification"></div>
+</div>
+
 <script src="../scripts/addGroup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
