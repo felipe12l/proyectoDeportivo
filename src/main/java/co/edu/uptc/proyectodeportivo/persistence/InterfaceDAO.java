@@ -22,14 +22,14 @@ public interface InterfaceDAO<T> extends Closeable {
      * @param id
      * @return
      */
-    T findById(Integer id);
+    T findById(String id);
 
     /**
      * borra el objeta
      * @param id
      * @return
      */
-    T delete(Integer id);
+    T delete(String id);
 
     /**
      * actualiza el objeto
@@ -37,6 +37,6 @@ public interface InterfaceDAO<T> extends Closeable {
      * @param id
      * @return
      */
-    T update(T object, Integer id);
+    T update(T object, String id);
 
 }

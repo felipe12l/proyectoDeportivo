@@ -17,17 +17,17 @@ public class CompetitionDAO implements InterfaceDAO<Competition> {
     }
 
     @Override
-    public Competition findById(Integer id) {
+    public Competition findById(String id) {
         return null;
     }
 
     @Override
-    public Competition delete(Integer id) {
+    public Competition delete(String id) {
         return null;
     }
 
     @Override
-    public Competition update(Competition object, Integer id) {
+    public Competition update(Competition object, String id) {
         return null;
     }
 

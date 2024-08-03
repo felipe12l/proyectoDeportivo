@@ -17,17 +17,17 @@ public class DisciplineDAO implements InterfaceDAO<Discipline> {
     }
 
     @Override
-    public Discipline findById(Integer id) {
+    public Discipline findById(String id) {
         return null;
     }
 
     @Override
-    public Discipline delete(Integer id) {
+    public Discipline delete(String id) {
         return null;
     }
 
     @Override
-    public Discipline update(Discipline object, Integer id) {
+    public Discipline update(Discipline object, String id) {
         return null;
     }
 
