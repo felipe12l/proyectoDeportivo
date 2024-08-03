@@ -25,11 +25,11 @@ public class AffiliateDAO implements InterfaceDAO<Affiliate> {
     public List<Affiliate> getAll() {
         List<Affiliate> affiliates = new ArrayList<>();
         try(MongoClient mongoClient =  MongoClients.create(connectionString)){
-         MongoDatabase database = mongoClient.getDatabase("db_affiliates");
+         MongoDatabase database = mongoClient.getDatabase("db_project");
          MongoCollection<Document> collection=database.getCollection("affiliates");
          FindIterable<Document> documents = collection.find();
             for (Document doc : documents) {
-                Affiliate affiliate=gson.fromJson(doc.toJson(), Affiliate.class);
+               Affiliate affiliate=gson.fromJson(doc.toJson(), Affiliate.class);
                 affiliates.add(affiliate);
             }
           
@@ -40,7 +40,7 @@ public class AffiliateDAO implements InterfaceDAO<Affiliate> {
     @Override
     public Affiliate save(Affiliate object) {
         try(MongoClient mongoClient =  MongoClients.create(connectionString)){
-            MongoDatabase database = mongoClient.getDatabase("db_affiliates");
+            MongoDatabase database = mongoClient.getDatabase("db_project");
             MongoCollection<Document> collection=database.getCollection("affiliates");
             String obj=gson.toJson(object);
             Document document = Document.parse(obj);
@@ -62,7 +62,7 @@ public class AffiliateDAO implements InterfaceDAO<Affiliate> {
         Affiliate a=findById(id);
         if(a!=null){
         try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            MongoDatabase database = mongoClient.getDatabase("db_affiliates");
+            MongoDatabase database = mongoClient.getDatabase("db_project");
             MongoCollection<Document> collection = database.getCollection("affiliates");
             FindIterable<Document> documents = collection.find();
             Document filter = new Document("id", id);

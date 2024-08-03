@@ -12,18 +12,19 @@ public class Affiliate {
     private int age;
     @SerializedName("name")
     private String name;
-    @SerializedName("last name")
+    @SerializedName("last_name")
     private String lastName;
     @SerializedName("gender")
     private boolean gender;
     private ArrayList<Competition> competitions;
-    @SerializedName("competitions")
+    @SerializedName("competitions_keys")
     private List<String> competitionsKey;
     public Affiliate() {
     competitionsKey = new ArrayList<>();
+    competitions=new ArrayList<>();
     }
 
-    public Affiliate(String id, int age, String name, String lastName, boolean gender) {
+    public Affiliate(String id, int age, String name, String lastName, boolean gender ) {
         competitionsKey=new ArrayList<>();
         competitions=new ArrayList<>();
         this.id = id;
