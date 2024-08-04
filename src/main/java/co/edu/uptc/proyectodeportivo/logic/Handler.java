@@ -7,18 +7,34 @@ import java.util.stream.Collectors;
 
 import org.bson.Document;
 
-public class Handlin {
-    private List<User> users;
+public class Handler {
+    private List<Affiliate> affiliates;
     private List<Team> teams;
 
     private List<Competition> cmps;
 
-    public User documentToUser(Document doc) {
-        User u = new User(
-                doc.getInteger("id"),
+    public int convertInt(Document doc, Object toparse){
+        int aux = 0;
+        try {
+            if (toparse instanceof Double) {
+                aux = ((Double) toparse).intValue();
+            } else if (toparse instanceof Integer) {
+                aux = (Integer) toparse;
+            } else if (toparse instanceof String) {
+                aux = Integer.parseInt((String) toparse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return aux;
+    }
+
+    public Affiliate documentToUser(Document doc) {
+        Affiliate u = new Affiliate(
+                convertInt(doc, doc.get("id")),
                 doc.getString("name"),
                 doc.getString("lastName"),
-                doc.getInteger("age"),
+                convertInt(doc, doc.get("age")),
                 new Discipline(doc.get("discipline", Document.class).getString("name"), doc.get("discipline", Document.class).getBoolean("isGroup"))
                 );
         u.setCompetitions(doc.getList("competitions", String.class));
@@ -26,21 +42,24 @@ public class Handlin {
     }
 
     public Team documentToTeam(Document doc) {
-
-        return new Team(
+        Team t = new Team(
                 doc.getString("name"),
                 doc.getList("participants", Document.class).stream().map(this::documentToUser).collect(Collectors.toList()),
-                new Discipline(doc.get("discipline", Document.class).getString("name"), doc.get("discipline", Document.class).getBoolean("isGroup"))
-        );
+                new Discipline(doc.get("discipline", Document.class).getString("name"), doc.get("discipline", Document.class).getBoolean("isGroup")));
+
+        if(!teams.stream().filter(tA -> tA.getName().equals(t.getName())).findFirst().isPresent()){
+            teams.add(t);
+        }
+        return t;
     }
 
-    public Document userToDocument(User user) {
-        return new Document("id", user.getId())
-                .append("name", user.getName())
-                .append("lastName", user.getLastName())
-                .append("age", user.getAge())
-                .append("discipline", new Document("name", user.getDiscipline().getName()).append("isGroup", user.getDiscipline().isGroup()))
-                .append("competitions", user.getCompetitions());
+    public Document userToDocument(Affiliate affiliate) {
+        return new Document("id", affiliate.getId())
+                .append("name", affiliate.getName())
+                .append("lastName", affiliate.getLastName())
+                .append("age", affiliate.getAge())
+                .append("discipline", new Document("name", affiliate.getDiscipline().getName()).append("isGroup", affiliate.getDiscipline().isGroup()))
+                .append("competitions", affiliate.getCompetitions());
     }
 
     public Competition documentToCompetition(Document doc) {
@@ -57,12 +76,12 @@ public class Handlin {
             );
         } else {
             List<Document> usersDocs = doc.getList("leaderboard", Document.class);
-            List<User> users = usersDocs.stream().map(this::documentToUser).collect(Collectors.toList());
+            List<Affiliate> affiliates = usersDocs.stream().map(this::documentToUser).collect(Collectors.toList());
             return new IndividualCompetition(
                     doc.getString("name"),
                     doc.getString("date"),
                     new Discipline(doc.get("discipline", Document.class).getString("name"), isGroup),
-                    users
+                    affiliates
             );
         }
     }
@@ -76,8 +95,8 @@ public class Handlin {
 
 
 
-    public Handlin() {
-        users = new ArrayList<User>();
+    public Handler() {
+        affiliates = new ArrayList<Affiliate>();
         teams = new ArrayList<>();
         cmps = new ArrayList<>();
     }
@@ -87,9 +106,9 @@ public class Handlin {
         return team.orElse(null);
     }
 
-    public boolean addTeam(String name, List<User> users, Discipline discipline) {
+    public boolean addTeam(String name, List<Affiliate> affiliates, Discipline discipline) {
         if (findTeam(name) == null) {
-            Team t = new Team(name, users, discipline);
+            Team t = new Team(name, affiliates, discipline);
             teams.add(t);
             return true;
         }
@@ -100,7 +119,7 @@ public class Handlin {
         Optional<Competition> cmp = cmps.stream().filter(c -> c.getName().equals(name)).findFirst();
         return cmp.orElse(null);
     }
-    public boolean addIndividualCompetition(String name, String date, Discipline discipline, List<User> leaderboard){
+    public boolean addIndividualCompetition(String name, String date, Discipline discipline, List<Affiliate> leaderboard){
         if(findCompetition(name) == null){
             IndividualCompetition ic = new IndividualCompetition(name, date, discipline, leaderboard);
             cmps.add(ic);
@@ -119,21 +138,21 @@ public class Handlin {
     }
 
 
-    public User findUser(int id){
-        Optional<User> user = users.stream().filter(u -> u.getId() == id).findFirst();
+    public Affiliate findUser(int id){
+        Optional<Affiliate> user = affiliates.stream().filter(u -> u.getId() == id).findFirst();
         return user.orElse(null);
     }
     public boolean addUser(int id, String name, String lastName, int age, Discipline discipline) {
         if(findUser(id) == null){
-            User user = new User(id, name, lastName, age, discipline);
-            users.add(user);
+            Affiliate affiliate = new Affiliate(id, name, lastName, age, discipline);
+            affiliates.add(affiliate);
             return true;
         }
         return false;
     }
 
     public boolean updateUser(int id, String name) {
-        User u = findUser(id);
+        Affiliate u = findUser(id);
         if(u != null){
             u.setName(name);
             return true;
@@ -142,16 +161,16 @@ public class Handlin {
     }
 
     public boolean deleteUser(int id){
-        User u = findUser(id);
+        Affiliate u = findUser(id);
         if(u != null){
-            users.remove(u);
+            affiliates.remove(u);
             return true;
         }
         return false;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Affiliate> getUsers() {
+        return affiliates;
     }
 
     public List<Team> getTeams() {
@@ -166,8 +185,8 @@ public class Handlin {
         this.cmps = cmps;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUsers(List<Affiliate> affiliates) {
+        this.affiliates = affiliates;
     }
 
     public void setTeams(List<Team> teams) {

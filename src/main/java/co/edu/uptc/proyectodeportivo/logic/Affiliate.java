@@ -3,7 +3,7 @@ package co.edu.uptc.proyectodeportivo.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class Affiliate {
 
     private int id;
     private String name;
@@ -12,7 +12,7 @@ public class User {
     private Discipline discipline;
     private List<String> competitions;
 
-    public User(int id, String name, String lastName, int age, Discipline discipline) {
+    public Affiliate(int id, String name, String lastName, int age, Discipline discipline) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;

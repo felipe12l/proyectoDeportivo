@@ -152,7 +152,6 @@ function doPost(){
     const params = new URLSearchParams({ param: 1})
     const name = document.getElementById('reg_name').value;
     const date = document.getElementById('reg_date').value;
-    const place = document.getElementById('reg_place').value;
     const disciplineSelect = document.getElementById('disciplineSelect').value;
     const leaderboardJSON = JSON.stringify(leaderboard);
 
@@ -165,7 +164,7 @@ function doPost(){
     }
 
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    const data = `name=${encodeURIComponent(name)}&date=${encodeURIComponent(date)}&place=${encodeURIComponent(place)}&discipline=${encodeURIComponent(disciplineSelect)}&leaderboard=${encodeURIComponent(leaderboardJSON)}`;
+    const data = `name=${encodeURIComponent(name)}&date=${encodeURIComponent(date)}&discipline=${encodeURIComponent(disciplineSelect)}&leaderboard=${encodeURIComponent(leaderboardJSON)}`;
     console.log(data)
     xhr.send(data)
 }
