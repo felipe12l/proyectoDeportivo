@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Optional;
 
 public class Group {
-    private int id;
+    private String id;
     private String nombre;
     private List<Affiliate> members;
     public Group() {}
 
-    public Group(int id, String nombre) {
+    public Group(String id, String nombre) {
         members=new ArrayList<>();
         this.id = id;
         this.nombre = nombre;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

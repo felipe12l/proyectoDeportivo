@@ -32,7 +32,7 @@ public class AffiliateDAO implements InterfaceDAO<Affiliate> {
                Affiliate affiliate=gson.fromJson(doc.toJson(), Affiliate.class);
                 affiliates.add(affiliate);
             }
-          
+
         }
         return affiliates;
     }
@@ -78,8 +78,32 @@ public class AffiliateDAO implements InterfaceDAO<Affiliate> {
 
     @Override
     public Affiliate update(Affiliate object, String id) {
+        // Encontrar el documento actual en la base de datos usando el id
+        Affiliate existingAffiliate = findById(id);
+        if (existingAffiliate != null) {
+            try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+                MongoDatabase database = mongoClient.getDatabase("db_project");
+                MongoCollection<Document> collection = database.getCollection("affiliates");
+
+                // Convertir el nuevo objeto Affiliate en un Document
+                String jsonString = gson.toJson(object);
+                Document updatedDocument = Document.parse(jsonString);
+
+                // Crear un filtro para encontrar el documento a actualizar
+                Document filter = new Document("id", id);
+
+                // Actualizar el documento en la colección
+                collection.replaceOne(filter, updatedDocument);
+
+                // Retornar el objeto actualizado
+                return object;
+            } catch (Exception e) {
+              return null;
+            }
+        }
         return null;
     }
+
 
     @Override
     public void close() throws IOException {

@@ -1,7 +1,7 @@
 package co.edu.uptc.proyectodeportivo.persistence;
 
-import co.edu.uptc.proyectodeportivo.model.Discipline;
-import co.edu.uptc.proyectodeportivo.model.Discipline;
+import co.edu.uptc.proyectodeportivo.model.Group;
+import co.edu.uptc.proyectodeportivo.model.Group;
 import com.google.gson.Gson;
 import com.mongodb.ConnectionString;
 import com.mongodb.client.*;
@@ -12,30 +12,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisciplineDAO implements InterfaceDAO<Discipline> {
+public class GroupDAO implements InterfaceDAO<Group> {
     private Gson gson;
     private ConnectionString connectionString;
     @Override
-    public List<Discipline> getAll() {
-        List<Discipline> Disciplines = new ArrayList<>();
+    public List<Group> getAll() {
+        List<Group> Groups = new ArrayList<>();
         try(MongoClient mongoClient =  MongoClients.create(connectionString)){
             MongoDatabase database = mongoClient.getDatabase("db_project");
-            MongoCollection<Document> collection=database.getCollection("disciplines");
+            MongoCollection<Document> collection=database.getCollection("groups");
             FindIterable<Document> documents = collection.find();
             for (Document doc : documents) {
-                Discipline Discipline=gson.fromJson(doc.toJson(), Discipline.class);
-                Disciplines.add(Discipline);
+                Group Group=gson.fromJson(doc.toJson(), Group.class);
+                Groups.add(Group);
             }
 
         }
-        return Disciplines;
+        return Groups;
     }
 
     @Override
-    public Discipline save(Discipline object) {
+    public Group save(Group object) {
         try(MongoClient mongoClient =  MongoClients.create(connectionString)){
             MongoDatabase database = mongoClient.getDatabase("db_project");
-            MongoCollection<Document> collection=database.getCollection("disciplines");
+            MongoCollection<Document> collection=database.getCollection("groups");
             String obj=gson.toJson(object);
             Document document = Document.parse(obj);
             collection.insertOne(document);
@@ -47,17 +47,17 @@ public class DisciplineDAO implements InterfaceDAO<Discipline> {
     }
 
     @Override
-    public Discipline findById(String id) {
+    public Group findById(String id) {
         return getAll().stream().filter(m-> m.getId().compareTo(id)==0).findFirst().orElse(null);
     }
 
     @Override
-    public Discipline delete(String id) {
-        Discipline a=findById(id);
+    public Group delete(String id) {
+        Group a=findById(id);
         if(a!=null){
             try (MongoClient mongoClient = MongoClients.create(connectionString)) {
                 MongoDatabase database = mongoClient.getDatabase("db_project");
-                MongoCollection<Document> collection = database.getCollection("disciplines");
+                MongoCollection<Document> collection = database.getCollection("groups");
                 FindIterable<Document> documents = collection.find();
                 Document filter = new Document("id", id);
 
@@ -71,15 +71,15 @@ public class DisciplineDAO implements InterfaceDAO<Discipline> {
     }
 
     @Override
-    public Discipline update(Discipline object, String id) {
+    public Group update(Group object, String id) {
         // Encontrar el documento actual en la base de datos usando el id
-        Discipline existingDiscipline = findById(id);
-        if (existingDiscipline != null) {
+        Group existingGroup = findById(id);
+        if (existingGroup != null) {
             try (MongoClient mongoClient = MongoClients.create(connectionString)) {
                 MongoDatabase database = mongoClient.getDatabase("db_project");
-                MongoCollection<Document> collection = database.getCollection("disciplines");
+                MongoCollection<Document> collection = database.getCollection("groups");
 
-                // Convertir el nuevo objeto Discipline en un Document
+                // Convertir el nuevo objeto Group en un Document
                 String jsonString = gson.toJson(object);
                 Document updatedDocument = Document.parse(jsonString);
 

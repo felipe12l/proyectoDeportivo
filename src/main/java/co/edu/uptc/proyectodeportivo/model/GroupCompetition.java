@@ -11,6 +11,10 @@ public class GroupCompetition extends Competition {
         groups = new ArrayList<>();
     }
 
+    public GroupCompetition(String id, Discipline discipline, String name, Date date, String place, String description) {
+        super(id, discipline, name, date, place, description);
+        groups = new ArrayList<>();
+    }
 
     public void removeGroup(List<Affiliate> group) {
         groups.remove(group);
