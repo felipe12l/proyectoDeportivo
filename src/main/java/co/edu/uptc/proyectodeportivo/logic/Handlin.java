@@ -3,12 +3,78 @@ package co.edu.uptc.proyectodeportivo.logic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.bson.Document;
 
 public class Handlin {
     private List<User> users;
     private List<Team> teams;
 
     private List<Competition> cmps;
+
+    public User documentToUser(Document doc) {
+        User u = new User(
+                doc.getInteger("id"),
+                doc.getString("name"),
+                doc.getString("lastName"),
+                doc.getInteger("age"),
+                new Discipline(doc.get("discipline", Document.class).getString("name"), doc.get("discipline", Document.class).getBoolean("isGroup"))
+                );
+        u.setCompetitions(doc.getList("competitions", String.class));
+        return u;
+    }
+
+    public Team documentToTeam(Document doc) {
+
+        return new Team(
+                doc.getString("name"),
+                doc.getList("participants", Document.class).stream().map(this::documentToUser).collect(Collectors.toList()),
+                new Discipline(doc.get("discipline", Document.class).getString("name"), doc.get("discipline", Document.class).getBoolean("isGroup"))
+        );
+    }
+
+    public Document userToDocument(User user) {
+        return new Document("id", user.getId())
+                .append("name", user.getName())
+                .append("lastName", user.getLastName())
+                .append("age", user.getAge())
+                .append("discipline", new Document("name", user.getDiscipline().getName()).append("isGroup", user.getDiscipline().isGroup()))
+                .append("competitions", user.getCompetitions());
+    }
+
+    public Competition documentToCompetition(Document doc) {
+        boolean isGroup = doc.get("discipline", Document.class).getBoolean("isGroup");
+
+        if (isGroup) {
+            List<Document> teamsDocs = doc.getList("leaderboard", Document.class);
+            List<Team> teams = teamsDocs.stream().map(this::documentToTeam).collect(Collectors.toList());
+            return new GroupalCompetition(
+                    doc.getString("name"),
+                    doc.getString("date"),
+                    new Discipline(doc.get("discipline", Document.class).getString("name"), isGroup),
+                    teams
+            );
+        } else {
+            List<Document> usersDocs = doc.getList("leaderboard", Document.class);
+            List<User> users = usersDocs.stream().map(this::documentToUser).collect(Collectors.toList());
+            return new IndividualCompetition(
+                    doc.getString("name"),
+                    doc.getString("date"),
+                    new Discipline(doc.get("discipline", Document.class).getString("name"), isGroup),
+                    users
+            );
+        }
+    }
+
+    public Document teamToDocument(Team team) {
+        return new Document("name", team.getName())
+                .append("discipline", new Document("name", team.getDiscipline().getName()).append("isGroup", team.getDiscipline().isGroup()))
+                .append("users", team.getParticipants().stream().map(this::userToDocument).collect(Collectors.toList()));
+    }
+
+
+
 
     public Handlin() {
         users = new ArrayList<User>();
@@ -98,6 +164,10 @@ public class Handlin {
 
     public void setCmps(List<Competition> cmps) {
         this.cmps = cmps;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public void setTeams(List<Team> teams) {
