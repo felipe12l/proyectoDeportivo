@@ -25,7 +25,7 @@ public class ClubServlet extends HttpServlet {
     private Handler handler;
     private MongoClient mongoClient;
     private MongoDatabase database;
-    private MongoCollection<Document> userCollection;
+    private MongoCollection<Document> affiliateCollection;
     private MongoCollection<Document> teamCollection;
     private MongoCollection<Document> competitionCollection;
 
@@ -33,15 +33,9 @@ public class ClubServlet extends HttpServlet {
         handler = new Handler();
         mongoClient = MongoClients.create("mongodb://localhost:27017");
         database = mongoClient.getDatabase("KKKClubDeportive");
-        userCollection = database.getCollection("affiliates");
+        affiliateCollection = database.getCollection("affiliates");
         teamCollection = database.getCollection("teams");
         competitionCollection = database.getCollection("competitions");
-        setup();
-    }
-
-    public void setup() {
-        // Insert initial data into MongoDB here
-        // You'll need to convert your objects to MongoDB Documents
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -54,9 +48,9 @@ public class ClubServlet extends HttpServlet {
             String discipline = request.getParameter("discipline");
             if(discipline != null){
                 if ("1".equals(param)) {
-                    List<Document> userDocs = userCollection.find(new Document("discipline.name", discipline)).into(new ArrayList<>());
+                    List<Document> userDocs = affiliateCollection.find(new Document("discipline.name", discipline)).into(new ArrayList<>());
                     List<Affiliate> affiliates = userDocs.stream().map(handler::documentToUser).collect(Collectors.toList());
-                    handler.setUsers(affiliates);
+                    handler.setAffiliates(affiliates);
                     String jsonResponse = gson.toJson(affiliates);
                     out.println(jsonResponse);
                 } else if ("2".equals(param)) {
@@ -70,9 +64,9 @@ public class ClubServlet extends HttpServlet {
                 }
             } else {
                 if("1".equals(param)){
-                    List<Document> userDocs = userCollection.find().into(new ArrayList<>());
+                    List<Document> userDocs = affiliateCollection.find().into(new ArrayList<>());
                     List<Affiliate> affiliates = userDocs.stream().map(handler::documentToUser).collect(Collectors.toList());
-                    handler.setUsers(affiliates);
+                    handler.setAffiliates(affiliates);
                     String jsonResponse = gson.toJson(affiliates);
                     out.println(jsonResponse);
                 } else if("2".equals(param)){
@@ -101,15 +95,12 @@ public class ClubServlet extends HttpServlet {
             Type leaderboardType = new TypeToken<List<Document>>(){}.getType();
             List<Document> leaderboardDocs = gson.fromJson(leaderboardJson, leaderboardType);
 
-            // Obtener IDs de usuarios desde el leaderboard
             List<Integer> userIds = leaderboardDocs.stream()
                     .map(doc -> doc.getDouble("id").intValue())
                     .collect(Collectors.toList());
 
-            // Obtener los documentos actualizados de los usuarios
-            List<Document> updatedUserDocs = userCollection.find(new Document("id", new Document("$in", userIds))).into(new ArrayList<>());
+            List<Document> updatedUserDocs = affiliateCollection.find(new Document("id", new Document("$in", userIds))).into(new ArrayList<>());
 
-            // Actualizar las competiciones de los usuarios
             for (Document userDoc : updatedUserDocs) {
                 Integer userId = userDoc.getInteger("id");
 
@@ -119,16 +110,13 @@ public class ClubServlet extends HttpServlet {
                 }
                 competitions.add(name);
 
-                userCollection.updateOne(
+                affiliateCollection.updateOne(
                         new Document("id", userId),
                         new Document("$set", new Document("competitions", competitions))
                 );
             }
 
-            // Reobtener los documentos de los usuarios después de la actualización
-            List<Document> newupdatedUserDocs = userCollection.find(new Document("id", new Document("$in", userIds))).into(new ArrayList<>());
-
-            // Construir el leaderboard con la información actualizada
+            List<Document> newupdatedUserDocs = affiliateCollection.find(new Document("id", new Document("$in", userIds))).into(new ArrayList<>());
             List<Document> updatedLeaderboardDocs = leaderboardDocs.stream()
                     .map(doc -> {
                         Integer userId = doc.getDouble("id").intValue();
@@ -140,7 +128,7 @@ public class ClubServlet extends HttpServlet {
                     .filter(doc -> doc != null)
                     .collect(Collectors.toList());
 
-            // Insertar el nuevo documento de competencia
+
             Document competitionDoc = new Document("name", name)
                     .append("date", date)
                     .append("discipline", new Document("name", discipline).append("isGroup", false))
@@ -165,10 +153,8 @@ public class ClubServlet extends HttpServlet {
                     .map(doc -> doc.getString("name"))
                     .collect(Collectors.toList());
 
-            // Obtener los documentos completos de los equipos
             List<Document> completeTeamDocs = teamCollection.find(new Document("name", new Document("$in", teamNames))).into(new ArrayList<>());
 
-            // Actualizar competiciones de los equipos
             for (Document teamDoc : completeTeamDocs) {
                 List<String> competitions = teamDoc.getList("competitions", String.class);
                 if (competitions == null) {
@@ -181,7 +167,6 @@ public class ClubServlet extends HttpServlet {
                 );
             }
 
-            // Reconstruir detailedLeaderboardDocs con la información actualizada
             List<Document> updatedTeamDocs = teamCollection.find(new Document("name", new Document("$in", teamNames))).into(new ArrayList<>());
             List<Document> detailedLeaderboardDocs = leaderboardDocs.stream()
                     .map(doc -> {
@@ -194,8 +179,7 @@ public class ClubServlet extends HttpServlet {
                     .filter(doc -> doc != null)
                     .collect(Collectors.toList());
 
-            // Actualizar competiciones de los afiliados
-            List<Document> allUsers = userCollection.find().into(new ArrayList<>());
+            List<Document> allUsers = affiliateCollection.find().into(new ArrayList<>());
             for (Document teamDoc : detailedLeaderboardDocs) {
                 List<Document> participants = teamDoc.getList("participants", Document.class);
                 for (Document participant : participants) {
@@ -212,7 +196,7 @@ public class ClubServlet extends HttpServlet {
                             competitions = new ArrayList<>();
                         }
                         competitions.add(name);
-                        userCollection.updateOne(
+                        affiliateCollection.updateOne(
                                 new Document("id", userId),
                                 new Document("$set", new Document("competitions", competitions))
                         );
